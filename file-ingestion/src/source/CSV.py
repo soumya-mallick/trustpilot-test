@@ -30,7 +30,7 @@ class CSV:
         return rows_to_add
 
     @staticmethod
-    def is_valid_email(self, email):
+    def is_valid_email(email):
         """ Performs email validation"""
         regex_pattern = r'^\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
         return re.match(regex_pattern, email) is not None

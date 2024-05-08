@@ -9,16 +9,16 @@ class PostgreDB:
         self.user = kwargs.get('user', 'postgres')
         self.data = data
         self.file_name = file_name
-        self.conn = None
+        self._conn = None
 
     def connect(self):
         """ Initiate DB connection """
-        self.conn = psycopg.connect(
+        self._conn = psycopg.connect(
             host=self.host,
             dbname=self.database,
             user=self.user
         )
-        return self.conn
+        return self._conn
 
 
     def create_table(self):
@@ -53,7 +53,7 @@ class PostgreDB:
                         with cur.copy(copy_cmd) as copy:
                             while data := file.read(100):
                                 copy.write(data)
-                    self.conn.commit()
+                    self._conn.commit()
                     logging.info("Successfully copied data to reviews table")
         except Exception as e:
             logging.error(f"Error occurred during PostgreSQL DB copy operation: {e}")
