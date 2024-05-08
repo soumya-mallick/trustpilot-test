@@ -12,6 +12,7 @@ class PostgreDB:
         self.conn = None
 
     def connect(self):
+        """ Initiate DB connection """
         self.conn = psycopg.connect(
             host=self.host,
             dbname=self.database,
@@ -21,6 +22,7 @@ class PostgreDB:
 
 
     def create_table(self):
+        """ Create reviews table """
         with self.connect() as conn:
             with conn.cursor() as cur:
                 cur.execute("""
@@ -38,6 +40,10 @@ class PostgreDB:
                 logging.info("Table created or verified successfully")
 
     def copy_to_table(self, csv_file_path):
+        """
+        Perform copy operation to table
+        :param csv_file_path file path of the csv file created with clean records
+        """
         copy_cmd = "COPY reviews from STDIN WITH (FORMAT CSV, HEADER true)"
         try:
             with self.connect() as conn:
@@ -56,6 +62,7 @@ class PostgreDB:
             conn.close()
 
     def write_data_to_csv(self):
+        """ Write clean data to a csv file locally to facilitate table copy operation """
         csv_file_name = f"{self.file_name.split('.')[0]}.csv".replace(" ", "_")
         file_path = csv_file_name
         if not self.data:
@@ -71,6 +78,7 @@ class PostgreDB:
 
 
     def process(self):
+        """ Handler method for carrying out table operations """
         self.create_table()
         csv_file_loc = self.write_data_to_csv()
         self.copy_to_table(csv_file_loc)

@@ -3,6 +3,8 @@ import logging
 import re
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 class CSV:
     """ Handler for CSV files"""
@@ -12,6 +14,7 @@ class CSV:
         self.encoding = file_encoding
 
     def clean_data(self):
+        """ Reads data file and performs clean up. Returns only cleaned rows """
         rows_to_add = list()
         rejected_rows = list()
         with open(self.file_path, 'r', encoding=self.encoding) as csv_file:
@@ -26,8 +29,8 @@ class CSV:
         logging.warning(f"Invalid emails: {rejected_rows}")
         return rows_to_add
 
+    @staticmethod
     def is_valid_email(self, email):
+        """ Performs email validation"""
         regex_pattern = r'^\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
         return re.match(regex_pattern, email) is not None
-
-
