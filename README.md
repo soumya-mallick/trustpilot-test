@@ -53,3 +53,6 @@ python3 CrudApp.py localhost trustpilot postgres admin reviews email_address
 1. It doesn't expose a web interface for performing tasks. It currently is sort of a backend library meant for internal use through command line.
 2. Select operation can filter only on one value for a given field.
 3. Insert operation through `crud-api` can perform inserts one row at a time. This hinders bulk insert but the `file-ingestion` can help with this if data for bulk insert can be provided as a CSV file.
+
+> [!NOTE]
+> CSV data file - `reviews_data.csv` is available under folder `csv-data-file`
